@@ -1,0 +1,18 @@
+{
+  "signinData": {
+    "successful": {
+      "username": "Katharina_Bernier",
+      "password": "s3cret"
+    },
+    "failed": {
+      "username": "user_doesnt_exist",
+      "password": "pa$$w0rd_doesnt_exist"
+    }
+  },
+  "Errors": {
+    "usernameRequired": "Username is required",
+    "passwordLength": "Password must contain at least 4 characters",
+    "userInvalid": "Username or password is invalid",
+    "wrongPassword": "Username or password is invalid"
+  }
+}
