@@ -2,7 +2,7 @@ import { signupPage } from "../../pages/signup.page";
 import { loginPage } from "../../pages/login.page";
 import { homePage } from "../../pages/home.page";
 import { userOnboardingModal } from "../../modals/user-onboarding.modal";
-import { bankAccountModal } from "../../modals/bank-account.modal";
+import { bankAccountModal } from "../../modals/bankaccount.modal";
 import { currentTimestampInSeconds } from "../../support/utils";
 
 describe("User Sign-up and Login", function () {
