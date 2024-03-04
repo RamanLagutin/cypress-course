@@ -1,0 +1,36 @@
+{
+  "bankAccountData": {
+    "successful": {
+      "bankName": "Priorbank",
+      "routingNumber": "858323339",
+      "accountNumber": "781374836"
+    },
+    "failed": {
+      "wrongNumberOfChars": {
+        "lessThanMin": {
+          "bankName": "abcd",
+          "routingNumber": "abcdefgh",
+          "accountNumber": "abcdefgh"
+        },
+        "moreThanMax": {
+          "accountNumber": "abcdefghijklm"
+        }
+      }
+    }
+  },
+  "createBankAccountFormErrors": {
+    "bankName": {
+      "empty": "Enter a bank name",
+      "lessThanMinChars": "Must contain at least 5 characters"
+    },
+    "routingNumber": {
+      "empty": "Enter a valid bank routing number",
+      "lessThanMinChars": "Must contain a valid routing number"
+    },
+    "accountNumber": {
+      "empty": "Enter a valid bank account number",
+      "lessThanMinChars": "Must contain at least 9 digits",
+      "maxThanMaxChars": "Must contain no more than 12 digits"
+    }
+  }
+}
