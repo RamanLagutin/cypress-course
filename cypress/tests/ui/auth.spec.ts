@@ -7,7 +7,7 @@ import { currentTimestampInSeconds } from "../../support/utils";
 
 describe("User Sign-up and Login", function () {
   beforeEach(() => {
-    cy.visit("/");
+    cy.openRWA();
   });
 
   it("should redirect unauthenticated user to signin page", function () {

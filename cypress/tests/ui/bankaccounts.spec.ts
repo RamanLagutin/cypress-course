@@ -9,10 +9,11 @@ import { bankAccountModal } from "../../modals/bankaccount.modal";
 
 describe("Bank Accounts", function () {
   beforeEach(() => {
-    cy.visit("/");
+    cy.openRWA();
     loginPage.login();
     homePage.openBankAccounts();
     bankAccountsPage.openCreateBankAccountForm();
+    cy.task("db:seed");
   });
 
   it("creates a new bank account", function () {
