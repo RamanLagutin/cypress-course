@@ -363,3 +363,7 @@ Cypress.Commands.add("loginByGoogleApi", () => {
     });
   });
 });
+
+Cypress.Commands.add("openRWA", () => {
+  cy.visit("/");
+});
