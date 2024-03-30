@@ -1,0 +1,21 @@
+{
+  "transactionData": {
+    "successful": {
+      "amount": 100,
+      "note": "Test transaction"
+    },
+    "invalid": {
+      "amount": "-",
+      "note": 2
+    }
+  },
+  "errors": {
+    "amount": {
+      "invalidData": "amount must be a `number` type, but the final value was: `NaN` (cast from the value `\"-\"`).",
+      "emptyField": "Please enter a valid amount"
+    },
+    "note": {
+      "emptyField": "Please enter a note"
+    }
+  }
+}
