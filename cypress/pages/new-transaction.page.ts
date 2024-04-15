@@ -1,4 +1,5 @@
 import { homeLocator } from "../pages/home.page";
+import { loginPage } from "./login.page";
 
 const transactionPageLocator = {
   amount: "#amount",
@@ -80,5 +81,16 @@ export const transactionPage = {
   },
   checkPayRequestButtonsDisabled: () => {
     cy.get(transactionPageLocator.payButton).should("be.disabled");
+  },
+};
+
+export const transactionModule = {
+  createPayment: () => {
+    loginPage.login();
+    transactionPage.open();
+    transactionPage.chooseBeneficiary();
+    transactionPage.fillUpTransaction.successfully();
+    transactionPage.pay();
+    transactionPage.checkSuccessTransaction();
   },
 };

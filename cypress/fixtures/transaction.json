@@ -17,5 +17,8 @@
     "note": {
       "emptyField": "Please enter a note"
     }
+  },
+  "noNotifications": {
+    "message": "No Notifications"
   }
 }
