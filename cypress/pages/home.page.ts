@@ -4,6 +4,7 @@ export const homeLocator = {
   newTransactionButton: "[data-test='nav-top-new-transaction']",
   main: "[data-test='main']",
   transactionList: "[data-test='transaction-list']",
+  bellButton: "[data-test='nav-top-notifications-link']",
 };
 
 export const homePage = {
@@ -22,5 +23,26 @@ export const homePage = {
         cy.get("li:first").contains(transaction.transactionData.successful.note);
       });
     });
+  },
+  openBenefeciarysTransaction: () => {
+    cy.fixture("login").then((signinOptions) => {
+      cy.get(homeLocator.transactionList).within(() => {
+        cy.contains(`${signinOptions.signinData.benefeciary.name} paid`).parent().click();
+      });
+    });
+  },
+  openTransactionOtherUsers: () => {
+    cy.fixture("login").then((signinOptions: any) => {
+      cy.get(homeLocator.transactionList).within(() => {
+        cy.contains(
+          `${signinOptions.signinData.benefeciary.name} paid ${signinOptions.signinData.successful.name}`
+        )
+          .parent()
+          .click();
+      });
+    });
+  },
+  openNotifications: () => {
+    cy.get(homeLocator.bellButton).click();
   },
 };
