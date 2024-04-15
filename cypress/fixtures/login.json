@@ -2,11 +2,18 @@
   "signinData": {
     "successful": {
       "username": "Katharina_Bernier",
-      "password": "s3cret"
+      "password": "s3cret",
+      "name": "Edgar Johns"
     },
     "benefeciary": {
       "username": "Tavares_Barrows",
-      "password": "s3cret"
+      "password": "s3cret",
+      "name": "Arely Kertzmann"
+    },
+    "thirdUser": {
+      "username": "Allie2",
+      "password": "s3cret",
+      "name": "Kaylin Homenick"
     },
     "failed": {
       "username": "user_doesnt_exist",

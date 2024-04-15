@@ -38,6 +38,13 @@ export const loginPage = {
       cy.get(loginLocator.logInButton).click();
     });
   },
+  loginThirdUser: () => {
+    cy.fixture("login").then((signinOptions) => {
+      cy.get(loginLocator.username).type(signinOptions.signinData.thirdUser.username);
+      cy.get(loginLocator.password).type(signinOptions.signinData.thirdUser.password);
+      cy.get(loginLocator.logInButton).click();
+    });
+  },
   loginInvalidUser: () => {
     cy.fixture("login").then((signinOptions) => {
       cy.get(loginLocator.username).type(signinOptions.signinData.failed.username);
