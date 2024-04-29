@@ -1,12 +1,13 @@
 import { bankAccountLocator } from "../locators/bankaccount.locators";
+import { bankAccount } from "../models/bank-account/bankaccount";
 
 export const bankAccountsPage = {
   openCreateBankAccountForm: () => {
     cy.get(bankAccountLocator.createButton).click();
   },
   checkBankAccountCreated: () => {
-    cy.fixture("bankaccount").then((bankAccount: any) => {
-      cy.get("ul li:last")
+    cy.fixture("bankaccount").then((bankAccount: bankAccount) => {
+      cy.get(bankAccountLocator.lastElement)
         .within(() => {
           cy.get(bankAccountLocator.deleteButton).contains("Delete");
         })
@@ -14,15 +15,15 @@ export const bankAccountsPage = {
     });
   },
   deleteLastAccount: () => {
-    cy.fixture("bankaccount").then((bankAccount: any) => {
-      cy.get("ul li:last").within(() => {
+    cy.fixture("bankaccount").then((bankAccount: bankAccount) => {
+      cy.get(bankAccountLocator.lastElement).within(() => {
         cy.get(bankAccountLocator.deleteButton).click();
       });
     });
   },
   checkAccountIsDeleted: () => {
-    cy.fixture("bankaccount").then((bankAccount: any) => {
-      cy.get("ul li:last").within(() => {
+    cy.fixture("bankaccount").then((bankAccount: bankAccount) => {
+      cy.get(bankAccountLocator.lastElement).within(() => {
         cy.get(bankAccountLocator.deleteButton).should("not.exist");
         cy.contains("Deleted");
       });
@@ -76,14 +77,14 @@ export const createBankAccountForm = {
     });
   },
   putMoreThanMaxAccountNumber: () => {
-    cy.fixture("bankaccount").then((bankAccount) => {
+    cy.fixture("bankaccount").then((bankAccount: bankAccount) => {
       cy.get(bankAccountLocator.accountNumber).type(
         bankAccount.bankAccountData.failed.wrongNumberOfChars.moreThanMax.accountNumber
       );
     });
   },
   checkMoreThanMaxAccountNumberError: () => {
-    cy.fixture("bankaccount").then((errors) => {
+    cy.fixture("bankaccount").then((errors: bankAccount) => {
       cy.get(bankAccountLocator.accountNumberError).should(
         "have.text",
         errors.createBankAccountFormErrors.accountNumber.maxThanMaxChars

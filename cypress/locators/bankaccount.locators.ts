@@ -11,6 +11,7 @@ export const bankAccountLocator = {
   routingNumberError: "#bankaccount-routingNumber-input-helper-text",
   accountNumberError: "#bankaccount-accountNumber-input-helper-text",
   bankAccount: "[data-test='bankaccount-list-item']",
+  lastElement: "ul li:last",
 };
 
 export const createBankAccountInputs = ["bankName", "routingNumber", "accountNumber"];
