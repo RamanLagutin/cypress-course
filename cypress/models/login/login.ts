@@ -5,6 +5,7 @@ export type Login = {
       password: string;
     };
     benefeciary: {
+      name: any;
       username: string;
       password: string;
     };

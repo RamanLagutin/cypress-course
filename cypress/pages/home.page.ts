@@ -1,3 +1,4 @@
+import { Login } from "../models/login/login";
 import { Transaction } from "../models/transactions/transaction";
 
 export const homeLocator = {
@@ -28,14 +29,14 @@ export const homePage = {
     });
   },
   openBenefeciarysTransaction: () => {
-    cy.fixture("login").then((signinOptions) => {
+    cy.fixture("login").then((signinOptions: Login) => {
       cy.get(homeLocator.transactionList).within(() => {
         cy.contains(`${signinOptions.signinData.benefeciary.name} paid`).parent().click();
       });
     });
   },
   openTransactionOtherUsers: () => {
-    cy.fixture("login").then((signinOptions: any) => {
+    cy.fixture("login").then((signinOptions: Login) => {
       cy.get(homeLocator.transactionList).within(() => {
         cy.contains(
           `${signinOptions.signinData.benefeciary.name} paid ${signinOptions.signinData.successful.name}`
