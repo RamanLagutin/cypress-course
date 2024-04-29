@@ -1,3 +1,4 @@
+import { Transaction } from "../models/transactions/transaction";
 import { homeLocator } from "../pages/home.page";
 import { loginPage } from "./login.page";
 
@@ -10,6 +11,7 @@ const transactionPageLocator = {
   requestButton: "[data-test='transaction-create-submit-request']",
   amountHelperText: "#transaction-create-amount-input-helper-text",
   noteHelperText: "#transaction-create-description-input-helper-text",
+  firstElement: "ul li:first",
 };
 
 export const transactionPage = {
@@ -18,17 +20,19 @@ export const transactionPage = {
     cy.location("pathname").should("equal", "/transaction/new");
   },
   chooseBeneficiary: () => {
-    cy.get("ul li:first").click();
+    cy.get(transactionPageLocator.firstElement).click();
   },
   fillUpTransaction: {
     successfully: () => {
-      cy.fixture("transaction").then((transaction: any) => {
-        cy.get(transactionPageLocator.amount).type(transaction.transactionData.successful.amount);
+      cy.fixture("transaction").then((transaction: Transaction) => {
+        cy.get(transactionPageLocator.amount).type(
+          transaction.transactionData.successful.amount.toString()
+        );
         cy.get(transactionPageLocator.note).type(transaction.transactionData.successful.note);
       });
     },
     invalidData: () => {
-      cy.fixture("transaction").then((transaction: any) => {
+      cy.fixture("transaction").then((transaction: Transaction) => {
         cy.get(transactionPageLocator.amount).type(transaction.transactionData.invalid.amount);
       });
     },
@@ -40,14 +44,14 @@ export const transactionPage = {
     cy.get(transactionPageLocator.requestButton).click();
   },
   triggerEmptyInputErrors: () => {
-    cy.fixture("transaction").then((transaction: any) => {
+    cy.fixture("transaction").then((transaction: Transaction) => {
       cy.get(transactionPageLocator.amount).click();
       cy.get(transactionPageLocator.note).click();
       cy.get(homeLocator.main).click();
     });
   },
   checkSuccessTransaction: () => {
-    cy.fixture("transaction").then((transaction: any) => {
+    cy.fixture("transaction").then((transaction: Transaction) => {
       cy.get(transactionPageLocator.paymentMessage)
         .contains("Paid")
         .contains(`${transaction.transactionData.successful.amount}`)
@@ -56,7 +60,7 @@ export const transactionPage = {
     });
   },
   checkSuccessMoneyRequest: () => {
-    cy.fixture("transaction").then((transaction: any) => {
+    cy.fixture("transaction").then((transaction: Transaction) => {
       cy.get(transactionPageLocator.paymentMessage)
         .contains("Requested")
         .contains(`${transaction.transactionData.successful.amount}`)
@@ -65,14 +69,14 @@ export const transactionPage = {
     });
   },
   checkInvalidAmountError: () => {
-    cy.fixture("transaction").then((transaction: any) => {
+    cy.fixture("transaction").then((transaction: Transaction) => {
       cy.get(transactionPageLocator.amountHelperText).contains(
         transaction.errors.amount.invalidData
       );
     });
   },
   checkEmptyFieldErrors: () => {
-    cy.fixture("transaction").then((transaction: any) => {
+    cy.fixture("transaction").then((transaction: Transaction) => {
       cy.get(transactionPageLocator.amountHelperText).contains(
         transaction.errors.amount.emptyField
       );
