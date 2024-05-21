@@ -1,4 +1,5 @@
 import { signup } from "../fixtures/sign-up";
+import { Login } from "../models/login/login";
 
 const loginLocator = {
   username: "#username",
@@ -12,14 +13,14 @@ const loginLocator = {
 
 export const loginPage = {
   login: () => {
-    cy.fixture("login").then((signinOptions) => {
+    cy.fixture("login").then((signinOptions: Login) => {
       cy.get(loginLocator.username).type(signinOptions.signinData.successful.username);
       cy.get(loginLocator.password).type(signinOptions.signinData.successful.password);
       cy.get(loginLocator.logInButton).click();
     });
   },
   loginAndRemember: () => {
-    cy.fixture("login").then((signinOptions) => {
+    cy.fixture("login").then((signinOptions: Login) => {
       cy.get(loginLocator.username).type(signinOptions.signinData.successful.username);
       cy.get(loginLocator.password).type(signinOptions.signinData.successful.password);
       cy.get(loginLocator.rememberCheckbox).click();
@@ -31,15 +32,22 @@ export const loginPage = {
     cy.get(loginLocator.password).type(signup.successful.password);
     cy.get(loginLocator.logInButton).click();
   },
+  loginBenefeciary: () => {
+    cy.fixture("login").then((signinOptions: Login) => {
+      cy.get(loginLocator.username).type(signinOptions.signinData.benefeciary.username);
+      cy.get(loginLocator.password).type(signinOptions.signinData.benefeciary.password);
+      cy.get(loginLocator.logInButton).click();
+    });
+  },
   loginInvalidUser: () => {
-    cy.fixture("login").then((signinOptions) => {
+    cy.fixture("login").then((signinOptions: Login) => {
       cy.get(loginLocator.username).type(signinOptions.signinData.failed.username);
       cy.get(loginLocator.password).type(signinOptions.signinData.failed.password);
       cy.get(loginLocator.logInButton).click();
     });
   },
   loginWrongPassword: () => {
-    cy.fixture("login").then((signinOptions) => {
+    cy.fixture("login").then((signinOptions: Login) => {
       cy.get(loginLocator.username).type(signinOptions.signinData.successful.username);
       cy.get(loginLocator.password).type(signinOptions.signinData.failed.password);
       cy.get(loginLocator.logInButton).click();
@@ -49,7 +57,7 @@ export const loginPage = {
     cy.get(loginLocator.password).type("s").blur();
   },
   checkInputErrors: () => {
-    cy.fixture("login").then((signinErrors) => {
+    cy.fixture("login").then((signinErrors: Login) => {
       cy.get(loginLocator.usernameRequiredError).should(
         "have.text",
         signinErrors.Errors.usernameRequired
@@ -62,12 +70,12 @@ export const loginPage = {
     });
   },
   checkInvalidUserError: () => {
-    cy.fixture("login").then((userErrors) => {
+    cy.fixture("login").then((userErrors: Login) => {
       cy.get(loginLocator.loginError).should("have.text", userErrors.Errors.userInvalid);
     });
   },
   checkWrongPasswordError: () => {
-    cy.fixture("login").then((passwordErrors) => {
+    cy.fixture("login").then((passwordErrors: Login) => {
       cy.get(loginLocator.loginError).should("have.text", passwordErrors.Errors.wrongPassword);
     });
   },

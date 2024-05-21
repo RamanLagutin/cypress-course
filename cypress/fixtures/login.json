@@ -4,6 +4,10 @@
       "username": "Katharina_Bernier",
       "password": "s3cret"
     },
+    "benefeciary": {
+      "username": "Tavares_Barrows",
+      "password": "s3cret"
+    },
     "failed": {
       "username": "user_doesnt_exist",
       "password": "pa$$w0rd_doesnt_exist"
