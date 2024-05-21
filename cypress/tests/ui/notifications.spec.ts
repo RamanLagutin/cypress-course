@@ -12,7 +12,7 @@ describe("notifications from user interactions", function () {
 
   it(
     "User A likes a transaction of User B; User B gets notification that User A liked transaction",
-    { browser: "firefox" },
+    { browser: "!firefox" },
     function () {
       loginPage.login();
       homePage.openBenefeciarysTransaction();

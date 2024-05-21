@@ -84,7 +84,7 @@ export const transactionPage = {
     });
   },
   checkPayRequestButtonsDisabled: () => {
-    cy.get(transactionPageLocator.payButton).should("be.disabled");
+    cy.get(transactionPageLocator.payButton).then((btn) => expect(btn).to.be.disabled);
   },
 };
 
