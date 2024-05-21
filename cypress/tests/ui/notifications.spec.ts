@@ -1,47 +1,58 @@
-import { isMobile } from "../../support/utils";
-import { User, Transaction } from "../../../src/models";
+import { homePage } from "../../pages/home.page";
+import { loginPage } from "../../pages/login.page";
+import { notificationsPage } from "../../pages/notifications.page";
+import { transactioSummaryPage } from "../../pages/transaction.page";
+import { transactionModule } from "../../pages/new-transaction.page";
 
-type NotificationsCtx = {
-  userA: User;
-  userB: User;
-  userC: User;
-};
-
-describe("Notifications", function () {
-  const ctx = {} as NotificationsCtx;
-
-  beforeEach(function () {
+describe("notifications from user interactions", function () {
+  beforeEach(() => {
     cy.task("db:seed");
-
-    cy.intercept("GET", "/notifications*").as("getNotifications");
-    cy.intercept("POST", "/transactions").as("createTransaction");
-    cy.intercept("PATCH", "/notifications/*").as("updateNotification");
-    cy.intercept("POST", "/comments/*").as("postComment");
-
-    cy.database("filter", "users").then((users: User[]) => {
-      ctx.userA = users[0];
-      ctx.userB = users[1];
-      ctx.userC = users[2];
-    });
+    cy.openRWA();
   });
 
-  describe("notifications from user interactions", function () {
-    it(
-      "User A likes a transaction of User B; User B gets notification that User A liked transaction",
-      // note: omit this test on Firefox due to component issues, see next guide: 
-      // https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests#Suite-configuration
-      function () {
-      }
-    );
+  it(
+    "User A likes a transaction of User B; User B gets notification that User A liked transaction",
+    { browser: "!firefox" },
+    function () {
+      loginPage.login();
+      homePage.openBenefeciarysTransaction();
+      transactioSummaryPage.likeTransaction();
 
-    it("User C likes a transaction between User A and User B; User A and User B get notifications that User C liked transaction", function () {
+      homePage.signout();
+      loginPage.loginBenefeciary();
+      homePage.openNotifications();
+      notificationsPage.checkLastLikedTransaction("successfulUser");
+    }
+  );
 
-    });
+  it("User C likes a transaction between User A and User B; User A and User B get notifications that User C liked transaction", function () {
+    loginPage.loginThirdUser();
+    homePage.openTransactionOtherUsers();
+    transactioSummaryPage.likeTransaction();
 
-    it("User A sends a payment to User B", function () {
-    });
+    homePage.signout();
+    loginPage.login();
+    homePage.openNotifications();
+    notificationsPage.checkLastLikedTransaction("thirdUser");
+
+    homePage.signout();
+    loginPage.loginBenefeciary();
+    homePage.openNotifications();
+    notificationsPage.checkLastLikedTransaction("thirdUser");
+  });
+
+  it("User A sends a payment to User B", function () {
+    transactionModule.createPayment();
+
+    homePage.signout();
+    loginPage.loginBenefeciary();
+    homePage.openNotifications();
+    notificationsPage.checkLastPaymentTransaction("benefeciaryUser");
   });
 
   it("renders an empty notifications state", function () {
+    loginPage.login();
+    homePage.openNotifications();
+    notificationsPage.dismissAllNotifications();
   });
 });
