@@ -1,4 +1,3 @@
-import path from "path";
 import _ from "lodash";
 import axios from "axios";
 import dotenv from "dotenv";
@@ -8,6 +7,24 @@ import { defineConfig } from "cypress";
 
 dotenv.config({ path: ".env.local" });
 dotenv.config();
+
+function getViewportDimensions(device: string): { width: number; height: number } {
+  switch (device.toLowerCase()) {
+    case "iphone 15":
+      return { width: 393, height: 852 };
+    case "iphone 15 pro max":
+      return { width: 430, height: 932 };
+    case "samsung galaxy s21":
+      return { width: 360, height: 800 };
+    case "pixel 8 pro":
+      return { width: 448, height: 998 };
+    default:
+      return { width: 1280, height: 1000 };
+  }
+}
+
+const selectedDevice = process.env.DEVICE || "default";
+const { width, height } = getViewportDimensions(selectedDevice);
 
 // const awsConfig = require(path.join(__dirname, "./aws-exports-es5.js"));
 
@@ -67,8 +84,8 @@ module.exports = defineConfig({
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/tests/**/*.spec.{js,jsx,ts,tsx}",
     supportFile: "cypress/support/e2e.ts",
-    viewportHeight: 1000,
-    viewportWidth: 1280,
+    viewportHeight: height,
+    viewportWidth: width,
     experimentalRunAllSpecs: true,
     setupNodeEvents(on, config) {
       const testDataApiEndpoint = `${config.env.apiUrl}/testData`;
