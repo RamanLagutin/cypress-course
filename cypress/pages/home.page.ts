@@ -11,22 +11,30 @@ export const homeLocator = {
   firstElement: "li:first",
 };
 
+const isMobileDevice = (): boolean => Boolean(Cypress.env("DEVICE"));
+const _clickSidebarMobile = () => {
+  cy.get('[data-test="sidenav-toggle"]').should("be.visible").click();
+};
+
 export const homePage = {
   signout: () => {
-    cy.get(homeLocator.signOutButton).click();
+    const _signoutClick = () => cy.get(homeLocator.signOutButton).click();
+
+    if (isMobileDevice()) {
+      _clickSidebarMobile();
+      _signoutClick();
+    } else {
+      _signoutClick();
+    }
   },
   openBankAccounts: () => {
-    const isMobileDevice = (): boolean => !!Cypress.env("DEVICE");
-    const _clickSidebarMobile = () => {
-      cy.get('[data-test="sidenav-toggle"]').should("be.visible").click();
-    };
     const _clickAccountsBtn = () => cy.get(homeLocator.bankAccountsButton).click();
 
     const _openBankAccountsMobile = () => {
       _clickSidebarMobile();
       _clickAccountsBtn();
     };
-    
+
     isMobileDevice() ? _openBankAccountsMobile() : _clickAccountsBtn();
   },
   checkMoneyTransaction: (transactionType: string) => {
