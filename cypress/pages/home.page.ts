@@ -16,7 +16,18 @@ export const homePage = {
     cy.get(homeLocator.signOutButton).click();
   },
   openBankAccounts: () => {
-    cy.get(homeLocator.bankAccountsButton).click();
+    const isMobileDevice = (): boolean => !!Cypress.env("DEVICE");
+    const _clickSidebarMobile = () => {
+      cy.get('[data-test="sidenav-toggle"]').should("be.visible").click();
+    };
+    const _clickAccountsBtn = () => cy.get(homeLocator.bankAccountsButton).click();
+
+    const _openBankAccountsMobile = () => {
+      _clickSidebarMobile();
+      _clickAccountsBtn();
+    };
+    
+    isMobileDevice() ? _openBankAccountsMobile() : _clickAccountsBtn();
   },
   checkMoneyTransaction: (transactionType: string) => {
     cy.fixture("transaction").then((transaction: Transaction) => {
