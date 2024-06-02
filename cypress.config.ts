@@ -23,7 +23,7 @@ function getViewportDimensions(device: string): { width: number; height: number 
   }
 }
 
-const selectedDevice = process.env.DEVICE || "default";
+const selectedDevice = process.env.CYPRESS_DEVICE || "default";
 const { width, height } = getViewportDimensions(selectedDevice);
 
 // const awsConfig = require(path.join(__dirname, "./aws-exports-es5.js"));
