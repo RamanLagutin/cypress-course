@@ -8,3 +8,5 @@ export function currentTimestampInSeconds() {
   const currentTimestamp = Math.floor(plus30Days / 1000);
   return Math.floor(currentTimestamp / 10);
 }
+
+export const isMobileDevice = (): boolean => Boolean(Cypress.env("DEVICE"));
