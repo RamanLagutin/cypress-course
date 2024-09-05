@@ -12,6 +12,7 @@ export default function Footer() {
           style={{ textDecoration: "none" }}
           target="_blank"
           rel="noopener noreferrer"
+          data-test={"cypress-logo-button"}
           href="https://cypress.io"
         >
           <CypressLogo
