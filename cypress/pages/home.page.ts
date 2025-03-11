@@ -1,5 +1,6 @@
 import { Login } from "../models/login/login";
 import { Transaction } from "../models/transactions/transaction";
+import { isMobileDevice } from "../support/utils";
 
 export const homeLocator = {
   signOutButton: "[data-test='sidenav-signout']",
@@ -9,13 +10,22 @@ export const homeLocator = {
   transactionList: "[data-test='transaction-list']",
   bellButton: "[data-test='nav-top-notifications-link']",
   firstElement: "li:first",
+  sidenavToggle: "[data-test='sidenav-toggle']",
 };
+
+function openSidebarMenuIfMobileDevice() {
+  if (isMobileDevice()) {
+    cy.get(homeLocator.sidenavToggle).click();
+  }
+}
 
 export const homePage = {
   signout: () => {
+    openSidebarMenuIfMobileDevice();
     cy.get(homeLocator.signOutButton).click();
   },
   openBankAccounts: () => {
+    openSidebarMenuIfMobileDevice();
     cy.get(homeLocator.bankAccountsButton).click();
   },
   checkMoneyTransaction: (transactionType: string) => {

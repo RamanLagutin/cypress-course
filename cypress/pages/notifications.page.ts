@@ -1,6 +1,9 @@
+import { isMobileDevice } from "../support/utils";
+
 const notificationsLocator = {
   notificationsList: "[data-test='notifications-list']",
   noNotificationsSign: "[data-test='empty-list-header']",
+  firstElement: "li:first",
 };
 
 export const notificationsPage = {
@@ -12,7 +15,7 @@ export const notificationsPage = {
           benefeciaryUser: userData.signinData.benefeciary.name,
           thirdUser: userData.signinData.thirdUser.name,
         };
-        cy.get("li:first").contains(
+        cy.get(notificationsLocator.firstElement).contains(
           `${userNames[user as keyof typeof userNames]} liked a transaction.`
         );
       });
@@ -26,7 +29,7 @@ export const notificationsPage = {
           benefeciaryUser: userData.signinData.benefeciary.name,
           thirdUser: userData.signinData.thirdUser.name,
         };
-        cy.get("li:first").contains(
+        cy.get(notificationsLocator.firstElement).contains(
           `${userNames[user as keyof typeof userNames]} received payment.`
         );
       });
@@ -35,7 +38,9 @@ export const notificationsPage = {
   dismissAllNotifications: () => {
     cy.get(`${notificationsLocator.notificationsList} > li`).then((notifications) => {
       for (let i = 0; i < notifications.length; i++) {
-        cy.contains("button", "Dismiss").click();
+        if (isMobileDevice()) {
+          cy.get(notificationsLocator.firstElement).find("button").click();
+        } else cy.contains("button", "Dismiss").click();
       }
     });
     cy.fixture("transaction").then((transactionData) => {
